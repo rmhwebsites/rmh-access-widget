@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<!-- Deliberately broken: zoom locked (widget should unlock it) -->
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Demo Clinic — Access Widget Test Page</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  /* Deliberately broken: focus outlines suppressed site-wide */
+  *:focus { outline: none; }
+  body { font-family: Georgia, 'Times New Roman', serif; color: #2d3b36; background: #faf8f4; }
+  .w-nav { display: flex; align-items: center; justify-content: space-between; padding: 18px 48px; background: #fff; border-bottom: 1px solid #e8e2d8; position: sticky; top: 0; z-index: 10; }
+  .w-nav .logo { font-size: 22px; font-weight: bold; color: #24567f; }
+  .w-nav ul { display: flex; gap: 28px; list-style: none; align-items: center; }
+  .w-nav a { color: #2d3b36; text-decoration: none; font-size: 15px; }
+  .w-nav a.w--current { color: #e2612b; font-weight: bold; }
+  .w-nav-button { width: 36px; height: 30px; display: none; flex-direction: column; justify-content: space-between; cursor: pointer; }
+  .w-nav-button span { height: 4px; background: #24567f; border-radius: 2px; }
+  .hero { padding: 90px 48px; background-image: linear-gradient(120deg, #24567f 0%, #e2612b 100%); color: #fff; }
+  .hero h1 { font-size: 46px; max-width: 620px; line-height: 1.15; }
+  .hero p { margin-top: 18px; font-size: 19px; max-width: 540px; opacity: .92; }
+  .hero .cta { display: inline-block; margin-top: 28px; background: #fff; color: #24567f; padding: 14px 30px; border-radius: 999px; font-weight: bold; text-decoration: none; }
+  .badge { display: inline-block; margin-bottom: 16px; padding: 6px 14px; border-radius: 999px; background: rgba(255,255,255,.2); font-size: 13px; letter-spacing: .1em; text-transform: uppercase; animation: pulse 1.6s ease-in-out infinite; }
+  @keyframes pulse { 0%,100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.08); opacity: .7; } }
+  section { padding: 64px 48px; }
+  section h2 { font-size: 32px; margin-bottom: 12px; }
+  section > p { max-width: 640px; color: #5a6b64; margin-bottom: 32px; }
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .card { background: #fff; border: 1px solid #e8e2d8; border-radius: 14px; overflow: hidden; }
+  .card img, .card svg { width: 100%; height: 140px; display: block; object-fit: cover; }
+  .card .pad { padding: 20px; }
+  .card h3 { font-size: 19px; margin-bottom: 8px; }
+  .card p { font-size: 15px; color: #5a6b64; line-height: 1.5; }
+  .card a { color: #24567f; font-size: 14px; }
+  .w-slider { position: relative; background: #fff; border: 1px solid #e8e2d8; border-radius: 14px; padding: 40px 64px; max-width: 640px; }
+  .w-slider-arrow-left, .w-slider-arrow-right { position: absolute; top: 50%; transform: translateY(-50%); width: 20px; height: 20px; cursor: pointer; color: #24567f; font-size: 18px; }
+  .w-slider-arrow-left { left: 20px; }
+  .w-slider-arrow-right { right: 20px; }
+  .w-slider-nav { display: flex; gap: 8px; justify-content: center; margin-top: 20px; }
+  .w-slider-dot { width: 10px; height: 10px; border-radius: 50%; background: #ccc; cursor: pointer; }
+  .w-slider-dot.w-active { background: #24567f; }
+  .form-wrap { background: #fff; border: 1px solid #e8e2d8; border-radius: 14px; padding: 32px; max-width: 520px; }
+  .w-input { width: 100%; padding: 10px 12px; border: 1px solid #cfd8d3; border-radius: 8px; font: inherit; margin-bottom: 14px; }
+  .form-wrap button { background: #24567f; color: #fff; border: 0; padding: 12px 28px; border-radius: 8px; font: inherit; font-weight: bold; cursor: pointer; }
+  .w-form-done, .w-form-fail { display: none; padding: 12px; margin-top: 12px; border-radius: 8px; }
+  .w-form-done { background: #e2f4e6; }
+  .w-form-fail { background: #fdecea; }
+  footer { padding: 40px 48px; background: #0d2030; color: #cfd8d3; font-size: 14px; }
+  footer a { color: #eea485; }
+  .social { display: flex; gap: 14px; margin-top: 16px; }
+  .social a { display: inline-flex; width: 18px; height: 18px; color: #cfd8d3; }
+  .social svg { width: 100%; height: 100%; }
+  .tiny-link { font-size: 10px; }
+</style>
+</head>
+<body>
+<div class="w-nav">
+  <span class="logo">Demo Clinic</span>
+  <ul>
+    <li><a href="#" class="w--current">Home</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="https://example.com/patient-portal" target="_blank">Patient portal</a></li>
+  </ul>
+  <!-- Deliberately broken: Webflow-style hamburger is a bare div -->
+  <div class="w-nav-button"><span></span><span></span><span></span></div>
+</div>
+
+<main>
+  <div class="hero">
+    <span class="badge">Now accepting new patients</span>
+    <h1>Healthy skin starts with expert, personal care</h1>
+    <p>Board-certified dermatology and aesthetics for the whole family. Medical, surgical, and cosmetic treatments tailored to you.</p>
+    <a class="cta" href="#contact">Book an appointment</a>
+  </div>
+
+  <section id="services">
+    <h2>Our services</h2>
+    <p>From annual skin checks to advanced cosmetic procedures, our team treats every patient with evidence-based care and honest guidance.</p>
+    <div class="cards">
+      <div class="card">
+        <!-- Deliberately broken: no alt attribute -->
+        <img src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='140'%3E%3Crect width='400' height='140' fill='%23d8e6f2'/%3E%3Ccircle cx='200' cy='70' r='40' fill='%2324567f'/%3E%3C/svg%3E">
+        <div class="pad">
+          <h3>Medical dermatology</h3>
+          <p>Acne, eczema, psoriasis, and full-body skin cancer screenings with same-week availability.</p>
+          <a href="#services">Learn more about medical care</a>
+        </div>
+      </div>
+      <div class="card">
+        <svg viewBox="0 0 400 140" role="img" aria-label="Illustration of a scalpel, representing surgical dermatology">
+          <rect width="400" height="140" fill="#fdeedd"/>
+          <path d="M150 38 L250 74 L232 88 L138 54 Z" fill="#e2612b"/>
+        </svg>
+        <div class="pad">
+          <h3>Surgical dermatology</h3>
+          <p>Mohs surgery and excisions performed on-site with careful cosmetic closure techniques.</p>
+          <a href="#services">Learn more about surgery</a>
+        </div>
+      </div>
+      <div class="card">
+        <svg viewBox="0 0 400 140" role="img" aria-label="Illustration of a droplet, representing aesthetic treatments">
+          <rect width="400" height="140" fill="#ece5f7"/>
+          <path d="M200 26 C226 62 240 82 240 98 A40 40 0 0 1 160 98 C160 82 174 62 200 26 Z" fill="#24567f"/>
+        </svg>
+        <div class="pad">
+          <h3>Aesthetics</h3>
+          <p>Injectables, chemical peels, and medical-grade skincare from ISDIN and more.</p>
+          <a href="#services" class="tiny-link">details</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="reviews">
+    <h2>What patients say</h2>
+    <p>Real reviews from the community.</p>
+    <div class="w-slider">
+      <!-- Deliberately broken: unlabeled icon-font arrows and dots -->
+      <div class="w-slider-arrow-left">&#10094;</div>
+      <blockquote>"The most thorough skin check I have ever had. The whole team made me feel at ease."</blockquote>
+      <div class="w-slider-arrow-right">&#10095;</div>
+      <div class="w-slider-nav">
+        <div class="w-slider-dot w-active"></div>
+        <div class="w-slider-dot"></div>
+        <div class="w-slider-dot"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <h2>Request an appointment</h2>
+    <p>Fill out the form and our care team will reach out within one business day.</p>
+    <div class="form-wrap w-form">
+      <form>
+        <!-- Deliberately broken: no labels, placeholder only -->
+        <input class="w-input" type="text" name="full-name" placeholder="Full name">
+        <input class="w-input" type="email" name="email-address" placeholder="Email address">
+        <textarea class="w-input" name="message" rows="4" placeholder="How can we help?"></textarea>
+        <button type="button">Send request</button>
+      </form>
+      <div class="w-form-done">Thank you! Your submission has been received.</div>
+      <div class="w-form-fail">Oops! Something went wrong.</div>
+    </div>
+    <!-- Deliberately broken: iframe with no title -->
+    <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=-92.6,40.1,-92.5,40.2" width="400" height="200" style="border:0;margin-top:24px;border-radius:12px;"></iframe>
+  </section>
+</main>
+
+<footer>
+  <p>Demo Clinic — a test page for the RMH Access Widget. <a href="#services">Back to top</a></p>
+  <!-- Deliberately broken: icon-only social links, no labels -->
+  <div class="social">
+    <a href="https://www.facebook.com/democlinic"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-7h2.5l.5-3h-3V9.1c0-.9.3-1.6 1.7-1.6H16.6V4.8c-.3 0-1.3-.1-2.4-.1-2.4 0-4 1.4-4 4.1V11H7.7v3h2.5v7z"/></svg></a>
+    <a href="https://www.instagram.com/democlinic"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 8.4A3.6 3.6 0 1 0 12 15.6 3.6 3.6 0 0 0 12 8.4zm0 5.9a2.3 2.3 0 1 1 0-4.6 2.3 2.3 0 0 1 0 4.6zM17.8 8.2a.84.84 0 1 1-1.68 0 .84.84 0 0 1 1.68 0zM12 5.4c1.9 0 2.1 0 2.9.1.7 0 1.1.2 1.4.3.3.1.6.3.8.5.2.2.4.5.5.8.1.3.2.7.3 1.4 0 .8.1 1 .1 2.9s0 2.1-.1 2.9c0 .7-.2 1.1-.3 1.4-.1.3-.3.6-.5.8-.2.2-.5.4-.8.5-.3.1-.7.2-1.4.3-.8 0-1 .1-2.9.1s-2.1 0-2.9-.1c-.7 0-1.1-.2-1.4-.3a2.2 2.2 0 0 1-.8-.5 2.2 2.2 0 0 1-.5-.8c-.1-.3-.2-.7-.3-1.4 0-.8-.1-1-.1-2.9s0-2.1.1-2.9c0-.7.2-1.1.3-1.4.1-.3.3-.6.5-.8.2-.2.5-.4.8-.5.3-.1.7-.2 1.4-.3.8-.1 1-.1 2.9-.1z"/></svg></a>
+  </div>
+</footer>
+
+<script src="access-widget.js" defer
+        data-position="bottom-left"
+        data-statement-url="#contact"
+        data-feedback-email="access@democlinic.example"></script>
+</body>
+</html>
