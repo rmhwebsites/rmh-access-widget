@@ -1,5 +1,5 @@
 /*!
- * RMH Access Widget v2.0.0
+ * RMH Access Widget v2.0.1
  * A self-contained accessibility layer for Webflow (or any) site:
  * user preference panel + automatic WCAG remediation engine.
  *
@@ -926,7 +926,7 @@
       fb.href = 'mailto:' + CONFIG.feedbackEmail;
       ft.appendChild(fb);
     }
-    ft.appendChild(el('div', 'ver', 'RMH Access v2.0.0'));
+    ft.appendChild(el('div', 'ver', 'RMH Access v2.0.1'));
     mainView.appendChild(ft);
     panel.appendChild(mainView);
 
@@ -963,9 +963,12 @@
       if (path.indexOf(host) === -1) closePanel();
     });
 
-    /* Alt+A opens/closes the panel from anywhere on the page. */
+    /* Alt+A (Option+A on Mac) opens/closes the panel from anywhere.
+       e.code checks the physical key: on macOS, Option+A produces
+       key "å", so matching e.key alone breaks for every Mac user. */
     document.addEventListener('keydown', function (e) {
-      if (e.altKey && !e.ctrlKey && !e.metaKey && (e.key === 'a' || e.key === 'A')) {
+      if (e.altKey && !e.ctrlKey && !e.metaKey &&
+          (e.code === 'KeyA' || e.key === 'a' || e.key === 'A')) {
         e.preventDefault();
         open ? closePanel() : openPanel();
       }
@@ -1172,7 +1175,7 @@
 
     window.RMHAccess = {
       loaded: true,
-      version: '2.0.0',
+      version: '2.0.1',
       open: openPanel,
       close: closePanel,
       reset: resetAll,
